@@ -93,17 +93,18 @@ class AC(object):
         while q:
             parent = q.pop()
             for i in parent.next.values():
-                temp = parent.fail
-                while True:
-                    if not temp:
-                        i.fail = root
-                        break
-                    else:
-                        if i.value in temp.next.keys():
-                            i.fail = temp.next[i.value]
+                if i.fail != root:
+                    temp = parent.fail
+                    while True:
+                        if not temp:
+                            i.fail = root
                             break
-                    temp = temp.fail
-                q.insert(0, i)
+                        else:
+                            if i.value in temp.next.keys():
+                                i.fail = temp.next[i.value]
+                                break
+                        temp = temp.fail
+                    q.insert(0, i)
         root.fail = root
         return root
 
